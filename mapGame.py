@@ -16,6 +16,20 @@ borderW = 6 #width of rectangle card
 #game locations
 locations = ["Stever", "Tepper", "Baker", "CUC", "Mudge", "M. Gardens", "M. E-Tower",
              "Hunt", "GHC", "Doherty", "Porter", "Wean"]
+boundaryCoords = [
+            [(940,950),(240,280)],
+            [(710,780),(320,400)],
+            [(730,840),(670,720)],
+            [(950,1030),(450,570)],
+            [(900,950),(180,230)],
+            [(890,950),(290,350)],
+            [(880,940),(355,390)],
+            [(850,900),(710,740)],
+            [(790,840),(465,535)],
+            [(780,870),(555,625)],
+            [(655,720),(650,705)],
+            [(685,775),(560,605)]
+            ]
 visited = []
 
 #user's circle information
@@ -58,7 +72,8 @@ def gamePlay():
             screen.blit(fontCali.render("Game Finished! Good Job!", 1, (0, 0, 0)),
                         pygame.Rect(1200+borderW, 2*borderW, width-(1200+2*borderW), 100-borderW))
             screen.blit(fontCali.render("Score: " + str(score), 1, (0, 0, 0)),
-                        pygame.Rect(1200+borderW, 6*borderW, width-(1200+2*borderW), 100-borderW))    
+                        pygame.Rect(1200+borderW, 6*borderW, width-(1200+2*borderW), 100-borderW))
+            break
         else: #event occurs
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -130,49 +145,20 @@ def gamePlay():
                 isFound = True
                 screen.blit(fontCali.render("Score: " + str(score), 1, (0, 0, 0)), pygame.Rect(1200+borderW, 6*borderW, width-(1200+2*borderW), 100-borderW))    
             # flip display
-        pygame.display.flip()    
+        pygame.display.flip()     
 
 #returns index in location list if user's circle lands within specific coordinates
 def boundaries(posx, posy):
-    #Stever
-    if (940 <= posx <= 950) and (240 <= posy <= 280):
-        return 0
-    #Tepper
-    elif (710<=posx<=780) and (320<=posy<=400):
-        return 1
-    #Baker Hall
-    elif (730<=posx<=840) and (670<=posy<=720):
-        return 2
-    #CUC
-    elif (950<=posx<=1030) and (450<=posy<=570):
-        return 3
-    #Mudge
-    elif (900<=posx<=950) and (180<=posy<=230):
-        return 4
-    #Morewood Gardens
-    elif (890<=posx<=950) and (290<=posy<=350):
-        return 5
-    #E-Tower
-    elif (880<=posx<=940) and (355<=posy<=390):
-        return 6
-    #Hunt
-    elif (850<=posx<=900) and (710<=posy<=740):
-        return 7
-    #GHC
-    elif (790<=posx<=840) and (465<=posy<=535):
-        return 8
-    #Doherty
-    elif (780<=posx<=870) and (555<=posy<=625):
-        return 9
-    #Porter
-    elif (655<=posx<=720) and (650<=posy<=705):
-        return 10
-    #Wean
-    elif (685<=posx<=775) and (560<=posy<=605):
-        return 11
-
+    for index in range(len(boundaryCoords)):
+        lstCoord = boundaryCoords[index]
+        x1,x2 = lstCoord[0]
+        y1,y2 = lstCoord[1]
+        if (x1 <= posx <= x2) and (y1 <= posy <= y2):
+            return index
+        
 def main():
     gameStart()
     gamePlay()
+    pygame.quit()
 
 main()
