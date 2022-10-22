@@ -44,7 +44,6 @@ def drawCard(red, green, blue):
     pygame.draw.rect(screen, (255, 255, 255), card)
 
 def gamePlay():
-    
     running = True # Run until user quits Pygame
     isFound = False #specific location is found
     gameOver = False #all locations found
